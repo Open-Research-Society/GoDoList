@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	todoFile = ".todos.json"
+	todoFile = "todos.mayur"
 )
 
 func main() {

@@ -106,6 +106,10 @@ func (t *Todos) Print() {
 		idx++
 		task := item.Task
 		done := "no"
+		if item.Done {
+			task = fmt.Sprintf("\u2705 %s", item.Task)
+			done = "yes"
+		}
 		cells = append(cells, *&[]*simpletable.Cell{
 			{Text: fmt.Sprintf("%d", idx)},
 			{Text: task},

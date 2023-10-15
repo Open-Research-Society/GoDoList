@@ -45,6 +45,7 @@ func main() {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
+		todos.Print()
 	case *complete > 0:
 		err := todos.Complete(*complete)
 		if err != nil {
@@ -56,6 +57,7 @@ func main() {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
+		todos.Print()
 
 	case *del > 0:
 		err := todos.Delete(*del)

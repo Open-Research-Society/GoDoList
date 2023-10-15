@@ -104,11 +104,11 @@ func (t *Todos) Print() {
 
 	for idx, item := range *t {
 		idx++
-		task := item.Task
-		done := "no"
+		task := blue(item.Task)
+		done := blue("no")
 		if item.Done {
-			task = fmt.Sprintf("\u2705 %s", item.Task)
-			done = "yes"
+			task = green(fmt.Sprintf("\u2705 %s", item.Task))
+			done = green("yes")
 		}
 		cells = append(cells, *&[]*simpletable.Cell{
 			{Text: fmt.Sprintf("%d", idx)},

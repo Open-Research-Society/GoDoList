@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	todoFile = "todos.mayur"
+	todoFile = "data/todos.mayur"
 )
 
 func main() {

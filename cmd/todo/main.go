@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	todoFile    = "data/todos.mayur"
+	todoFile = "data/todos.mayur"
 	historyFile = "data/history.mayur"
 )
 

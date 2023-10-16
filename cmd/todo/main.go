@@ -22,7 +22,7 @@ func main() {
 	complete := flag.Int("complete", 0, "mark a todo completed")
 	del := flag.Int("del", 0, "delete a todo")
 	list := flag.Bool("list", false, "show the list of todos")
-	showcompleted := flag.Bool("showcompleted", false, "show the list of todos")
+	showcompleted := flag.Bool("showcompleted", false, "show the list of completed todos")
 
 	flag.Parse()
 

@@ -14,13 +14,15 @@ import (
 
 const (
 	todoFile = "data/todos.mayur"
+	historyFile = "data/history.mayur"
 )
 
 func main() {
 	add := flag.Bool("add", false, "add a new todo")
 	complete := flag.Int("complete", 0, "mark a todo completed")
 	del := flag.Int("del", 0, "delete a todo")
-	list := flag.Bool("list", true, "show the list of todos")
+	list := flag.Bool("list", false, "show the list of todos")
+	showCompleted := flag.Bool("showCompleted", false, "show the list of completed todos")
 
 	flag.Parse()
 
@@ -47,13 +49,14 @@ func main() {
 		}
 		todos.Print()
 	case *complete > 0:
-		err := todos.Complete(*complete)
+		err := todos.Complete(*complete, historyFile)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		err = todos.Store(todoFile)
-		if err != nil {
+
+		// Store todos
+		if err := todos.Store(todoFile); err != nil {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
@@ -73,8 +76,11 @@ func main() {
 
 	case *list:
 		todos.Print()
+	case *showCompleted:
+		todos.PrintCompleted()
+
 	default:
-		fmt.Fprintln(os.Stdout, "invalid comman")
+		fmt.Fprintln(os.Stdout, "invalid command")
 		os.Exit(0)
 	}
 }

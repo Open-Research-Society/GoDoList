@@ -41,7 +41,15 @@ func (t *Todos) Complete(index int) error {
 
 	ls[index-1].CompletedAt = time.Now()
 	ls[index-1].Done = true
-
+	history := &Todos{}
+	if err := history.Load(historyFile); err != nil {
+		return err
+	}
+	history.Add(ls[index-1].Task)
+	if err := history.Store(historyFile); err != nil {
+		return err
+	}
+	*t = append(ls[:index-1], ls[index:]...)
 	return nil
 }
 
@@ -138,4 +146,36 @@ func (t *Todos) CountPending() int {
 	}
 
 	return total
+}
+
+func (t *Todos) PrintCompleted() {
+	table := simpletable.New()
+
+	table.Header = &simpletable.Header{
+		Cells: []*simpletable.Cell{
+			{Align: simpletable.AlignCenter, Text: "#"},
+			{Align: simpletable.AlignCenter, Text: "Task"},
+			{Align: simpletable.AlignCenter, Text: "CompletedAt"},
+		},
+	}
+
+	var cells [][]*simpletable.Cell
+	idx := 1
+
+	for _, item := range *t {
+		if item.Done {
+			task := green(fmt.Sprintf("\u2705 %s", item.Task))
+			cells = append(cells, []*simpletable.Cell{
+				{Text: fmt.Sprintf("%d", idx)},
+				{Text: task},
+				{Text: item.CompletedAt.Format(time.RFC822)},
+			})
+			idx++
+		}
+	}
+
+	table.Body = &simpletable.Body{Cells: cells}
+
+	table.SetStyle(simpletable.StyleUnicode)
+	table.Println()
 }

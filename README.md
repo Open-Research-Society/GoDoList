@@ -30,4 +30,5 @@ cd GoDoList
 ./todo -complete=1
 ./todo -del=1
 ./todo -list
+./todo -showCompleted
 ```

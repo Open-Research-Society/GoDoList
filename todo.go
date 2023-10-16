@@ -41,7 +41,15 @@ func (t *Todos) Complete(index int) error {
 
 	ls[index-1].CompletedAt = time.Now()
 	ls[index-1].Done = true
-
+	history := &Todos{}
+	if err := history.Load(historyFile); err != nil {
+		return err
+	}
+	history.Add(ls[index-1].Task)
+	if err := history.Store(historyFile); err != nil {
+		return err
+	}
+	*t = append(ls[:index-1], ls[index:]...)
 	return nil
 }
 

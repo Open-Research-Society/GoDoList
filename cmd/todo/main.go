@@ -49,13 +49,14 @@ func main() {
 		}
 		todos.Print()
 	case *complete > 0:
-		err := todos.Complete(*complete)
+		err := todos.Complete(*complete, historyFile)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		err = todos.Store(todoFile)
-		if err != nil {
+
+		// Store todos
+		if err := todos.Store(todoFile); err != nil {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
